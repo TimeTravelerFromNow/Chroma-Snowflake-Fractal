@@ -8,18 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		92C984C02B2B8F9200EE45EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C984BF2B2B8F9200EE45EC /* AppDelegate.swift */; };
-		92C984C22B2B8F9200EE45EC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C984C12B2B8F9200EE45EC /* ViewController.swift */; };
+		92C984C22B2B8F9200EE45EC /* FractalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C984C12B2B8F9200EE45EC /* FractalViewController.swift */; };
 		92C984C42B2B8F9500EE45EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92C984C32B2B8F9500EE45EC /* Assets.xcassets */; };
 		92C984C72B2B8F9500EE45EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92C984C52B2B8F9500EE45EC /* Main.storyboard */; };
+		92C984CF2B2B8FBA00EE45EC /* MetalTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C984CE2B2B8FBA00EE45EC /* MetalTypes.swift */; };
+		92C984D12B2B8FE400EE45EC /* shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 92C984D02B2B8FE400EE45EC /* shaders.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		92C984BC2B2B8F9200EE45EC /* Chroma Snowflake Fractal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chroma Snowflake Fractal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C984BF2B2B8F9200EE45EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		92C984C12B2B8F9200EE45EC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		92C984C12B2B8F9200EE45EC /* FractalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FractalViewController.swift; sourceTree = "<group>"; };
 		92C984C32B2B8F9500EE45EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		92C984C62B2B8F9500EE45EC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		92C984C82B2B8F9500EE45EC /* Chroma_Snowflake_Fractal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Chroma_Snowflake_Fractal.entitlements; sourceTree = "<group>"; };
+		92C984CE2B2B8FBA00EE45EC /* MetalTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalTypes.swift; sourceTree = "<group>"; };
+		92C984D02B2B8FE400EE45EC /* shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = shaders.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,10 +57,12 @@
 			isa = PBXGroup;
 			children = (
 				92C984BF2B2B8F9200EE45EC /* AppDelegate.swift */,
-				92C984C12B2B8F9200EE45EC /* ViewController.swift */,
+				92C984C12B2B8F9200EE45EC /* FractalViewController.swift */,
+				92C984CE2B2B8FBA00EE45EC /* MetalTypes.swift */,
 				92C984C32B2B8F9500EE45EC /* Assets.xcassets */,
 				92C984C52B2B8F9500EE45EC /* Main.storyboard */,
 				92C984C82B2B8F9500EE45EC /* Chroma_Snowflake_Fractal.entitlements */,
+				92C984D02B2B8FE400EE45EC /* shaders.metal */,
 			);
 			path = "Chroma Snowflake Fractal";
 			sourceTree = "<group>";
@@ -131,7 +137,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92C984C22B2B8F9200EE45EC /* ViewController.swift in Sources */,
+				92C984D12B2B8FE400EE45EC /* shaders.metal in Sources */,
+				92C984CF2B2B8FBA00EE45EC /* MetalTypes.swift in Sources */,
+				92C984C22B2B8F9200EE45EC /* FractalViewController.swift in Sources */,
 				92C984C02B2B8F9200EE45EC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
