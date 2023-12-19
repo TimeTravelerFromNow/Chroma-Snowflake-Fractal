@@ -13,7 +13,21 @@ struct RasterizerData {
     float4 color;
 };
 
+
 vertex RasterizerData vertex_main(const VertexIn vertexIn [[ stage_in ]],
+                                  uint vid [[vertex_id]],
+                                  constant float &timer [[ buffer(1) ]]) {
+    RasterizerData rd;
+    rd.position = float4(vertexIn.position.xyz, 1);
+    
+    rd.color = vertexIn.color;
+
+    return rd;
+}
+
+
+
+vertex RasterizerData vertex_main_chroma(const VertexIn vertexIn [[ stage_in ]],
                                   uint vid [[vertex_id]],
                                   constant float &timer [[ buffer(1) ]]) {
     RasterizerData rd;

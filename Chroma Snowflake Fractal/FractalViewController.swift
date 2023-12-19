@@ -1,7 +1,7 @@
 
 import MetalKit
 
-class FractalRenderer: NSObject {
+class SnowflakeRenderer: NSObject {
     private var _time: Float = 0
     private let snowflakeColor = float4(0.85,0.86, 0.9, 1.0)
     private static var CustomVertexDescriptor: MTLVertexDescriptor {
@@ -35,11 +35,13 @@ class FractalRenderer: NSObject {
     var pipelineState: MTLRenderPipelineState!
     var timer: Float = 0
     
+    var iterationNo: Int = 0
+    
     func resetTriangle() {
         vertices = [
-            CustomVertex( position: float3(-0.5,-0.5,0.0), color: float4(0) ),
-            CustomVertex( position: float3(0.5, -0.5, 0.0), color: float4(0) ),
-            CustomVertex( position: float3(0.0,0.366,0.0), color: float4(0) )
+            CustomVertex( position: float3(-0.5,-0.5,0.0), color: snowflakeColor ),
+            CustomVertex( position: float3(0.5, -0.5, 0.0), color: snowflakeColor ),
+            CustomVertex( position: float3(0.0,0.366,0.0), color: snowflakeColor )
             // tan(pi/3) * 0.5 (the height) - 0.5 ( the offset )
         ]
         _indices = [
@@ -48,6 +50,7 @@ class FractalRenderer: NSObject {
         _outsideIndices = [
             0 , 1, 2
         ]
+        iterationNo = 0
     }
     
     init(metalView: MTKView) {
@@ -56,8 +59,8 @@ class FractalRenderer: NSObject {
         let commandQueue = device.makeCommandQueue() else {
           fatalError("GPU not available")
       }
-        FractalRenderer.device = device
-        FractalRenderer.commandQueue = commandQueue
+        SnowflakeRenderer.device = device
+        SnowflakeRenderer.commandQueue = commandQueue
       metalView.device = device
       
       let library = device.makeDefaultLibrary()
@@ -67,7 +70,7 @@ class FractalRenderer: NSObject {
       let pipelineDescriptor = MTLRenderPipelineDescriptor()
       pipelineDescriptor.vertexFunction = vertexFunction
       pipelineDescriptor.fragmentFunction = fragmentFunction
-      pipelineDescriptor.vertexDescriptor = FractalRenderer.CustomVertexDescriptor
+      pipelineDescriptor.vertexDescriptor = SnowflakeRenderer.CustomVertexDescriptor
         
       pipelineDescriptor.colorAttachments[0].pixelFormat = metalView.colorPixelFormat
       do {
@@ -86,8 +89,8 @@ class FractalRenderer: NSObject {
     
     func updateBuffers()
     {
-        vertexBuffer = FractalRenderer.device.makeBuffer(bytes: &vertices, length: CustomVertex.stride(vertices.count))
-        _indexBuffer = FractalRenderer.device.makeBuffer(bytes: self._indices,
+        vertexBuffer = SnowflakeRenderer.device.makeBuffer(bytes: &vertices, length: CustomVertex.stride(vertices.count))
+        _indexBuffer = SnowflakeRenderer.device.makeBuffer(bytes: self._indices,
                                                 length: uint32.stride(self._indices.count),
                                                 options: [])
     }
@@ -160,6 +163,11 @@ class FractalRenderer: NSObject {
         vertices = newVerticesArr
         
         updateBuffers()
+        if (iterationNo == 1) {
+            print(vertices.map() { CGPoint(x: CGFloat($0.position.x),y: CGFloat($0.position.y)) })
+            print(_indices)
+        }
+        iterationNo += 1
     }
     
     func newTri(v0 : float3, v1: float3) -> [float3] {
@@ -187,7 +195,7 @@ class FractalRenderer: NSObject {
     }
   }
 
-  extension FractalRenderer: MTKViewDelegate {
+  extension SnowflakeRenderer: MTKViewDelegate {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
     }
     
@@ -195,7 +203,7 @@ class FractalRenderer: NSObject {
         _time += 1 / 9
       guard
         let descriptor = view.currentRenderPassDescriptor,
-        let commandBuffer = FractalRenderer.commandQueue.makeCommandBuffer(),
+        let commandBuffer = SnowflakeRenderer.commandQueue.makeCommandBuffer(),
         let renderEncoder =
         commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
           return
@@ -223,12 +231,12 @@ class FractalRenderer: NSObject {
 
 class FractalViewController: MTKView {
     
-    var renderer: FractalRenderer?
+    var renderer: SnowflakeRenderer?
     
     required init(coder: NSCoder) {
         super.init(coder: coder)
         
-        self.renderer = FractalRenderer(metalView: self)
+        self.renderer = SnowflakeRenderer(metalView: self)
     }
     @IBAction func snowflakeButtonPressed(_ sender: Any) {
         renderer?.kochIteration()
